@@ -14,7 +14,10 @@ async def on_ready():
     print('Bot is on')
     # Bot ready
 
-@bot.slash_command()
+# Slash command pain
+testingservers = [783415814342574151]
+
+@bot.slash_command(guild_ids = testingservers, name = "hello", description = "Just a command to test slash commands!")
 async def hello(ctx, name: str = None):
     name = name or ctx.author.name
     await ctx.respond(f"Hello {name}!")
