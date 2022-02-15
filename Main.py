@@ -32,7 +32,10 @@ async def send(ctx):
     except asyncio.TimeoutError:
         await ctx.send("timeout stoopid")
     else:
-        pass
-    await ctx.respond(message)
+        if message.content.lower() == " ":
+            await ctx.send("Your entered value is blank!")
+        else:
+            await ctx.send("Sent " + message.content.lower() + " !")
+    
     
 bot.run(os.getenv("apikey"))
