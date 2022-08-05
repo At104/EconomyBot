@@ -1,0 +1,11 @@
+aiohttp==3.8.1
+aiosignal==1.2.0
+async-timeout==4.0.2
+attrs==22.1.0
+charset-normalizer==2.1.0
+frozenlist==1.3.1
+idna==3.3
+multidict==6.0.2
+py-cord @ git+https://github.com/Pycord-Development/pycord@27c088b74dce01e4915c3b3590146438d22b80ab
+python-dotenv==0.20.0
+yarl==1.8.1
