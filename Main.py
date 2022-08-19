@@ -1,4 +1,7 @@
 import asyncio
+from py_compile import _get_default_invalidation_mode
+from pydoc import describe
+from unicodedata import name
 import discord
 from discord.ext import commands
 import os
@@ -22,44 +25,45 @@ testingservers = [783415814342574151]
 async def hello(ctx, nameinput: str = ""):
     name = nameinput or ctx.author.nameinput
     await ctx.respond(f"Hello {name}!")
+
+@bot.slash_command(name = "getuserid", description = "Get user IDs from mentions")
+async def getuserid(ctx, user: discord.User = None):
+    yourId = ctx.author.id
+    if not user:
+        await ctx.respond("Please enter in a user!")
+    else:
+        userId = user.id
+    await ctx.respond(f"<@{yourId}> is stalking <@{userId}> smh...")
     
 @bot.slash_command(name = "send", description = "Send another person money")
-async def send(ctx, nameinput = "", amount = ""):
-    
-    if (amount == "" and nameinput == ""):
+async def send(ctx, nameinput: discord.User = None, amount = ""):
+    yourId = ctx.author.id
+    if (amount == "" and not nameinput):
         await ctx.respond("Need to input at least the reciever or amount you want to send!")
         
-    elif (amount == ""):
-        await ctx.respond("How much do you want to send?") 
+    elif (amount == "" or not nameinput):
+        if amount == "":
+            await ctx.respond("How much do you want to send?")
+            thing_being_waited = "amount" 
+            
+        elif not nameinput:
+            await ctx.respond("Who do you want to send the money to?")
+            thing_being_waited = "nameinput" 
+            
         try:
-            amount = await bot.wait_for("amount", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=15.0)
-        except asyncio.TimeoutError:
-            await ctx.respond("timeout stoopid")
-        else:
-            if amount.content.lower() == " ":
-                await ctx.respond("Your entered value is blank!")    
-            else:
-                await ctx.respond("Sent " + amount + " to " + nameinput + "!")
-                     
-    elif (nameinput == ""):
-        await ctx.respond("Who do you want to send the money to?") 
-        try:
-            nameinput = await bot.wait_for("nameinput", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=15.0)
-        except asyncio.TimeoutError:
-            await ctx.respond("timeout stoopid")
-        else:
-            if nameinput == " ":
-                await ctx.respond("Your entered value is blank!")
-            else:
-                await ctx.respond("Sent " + amount + " to " + nameinput + "!")
-    
+            amount = await bot.wait_for(thing_being_waited, check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=15.0)
 
-    
+        except asyncio.TimeoutError:
+            await ctx.respond("timeout stoopid")
+
+        else:
+            if amount.content.lower() == " " or not nameinput:
+                ctx.respond("Your entered value is blank!")
+            else:
+                await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
+                     
     else:
-        await ctx.respond("Sent " + amount + " to " + nameinput + "!")
+        recipiantId = nameinput.id
+        await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
    
-        
-   
-    
-    
 bot.run(os.getenv("apikey"))
