@@ -1,3 +1,4 @@
+import json
 import asyncio
 import discord
 from discord.ext import commands
@@ -57,10 +58,20 @@ async def send(ctx, nameinput: discord.User = None, amount = ""):
             if amount.content.lower() == " " or not nameinput:
                 ctx.respond("Your entered value is blank!")
             else:
+                j = open('TestDataHolding.json')
+                idNums = json.load(j)
+                idNums[str(recipiantId)][0]["amount"] += int(amount)
+                with open ('TestDataHolding.json', 'w') as json_file:
+                    json.dump(idNums, json_file)
                 await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
                      
     else:
         recipiantId = nameinput.id
+        j = open('TestDataHolding.json')
+        idNums = json.load(j)
+        idNums[str(recipiantId)][0]["amount"] += int(amount)
+        with open ('TestDataHolding.json', 'w') as json_file:
+            json.dump(idNums, json_file)
         await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
    
 bot.run(os.getenv("apikey"))
