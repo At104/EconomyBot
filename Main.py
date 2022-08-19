@@ -1,7 +1,4 @@
 import asyncio
-from py_compile import _get_default_invalidation_mode
-from pydoc import describe
-from unicodedata import name
 import discord
 from discord.ext import commands
 import os
