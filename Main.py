@@ -10,6 +10,19 @@ bot = discord.Bot()
 
 load_dotenv()
 
+# Functions handling json (maybe put this in seperate file in the future)
+def read_json_file(filename: str) -> dict:
+    with open(filename, 'r') as json_file:
+        json_decoded = json.load(json_file)
+        json_file.close()
+
+    return json_decoded
+
+def write_json_file(filename: str, data: dict) -> None:
+    with open(filename, 'w') as json_file:
+        json.dump(data, json_file)
+        json_file.close()
+
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name="the stonk market")) # Displays the "playing as" for the bot
@@ -58,20 +71,18 @@ async def send(ctx, nameinput: discord.User = None, amount = ""):
             if amount.content.lower() == " " or not nameinput:
                 ctx.respond("Your entered value is blank!")
             else:
-                j = open('TestDataHolding.json')
-                idNums = json.load(j)
+                idNums = read_json_file('TestDataHolding.json')
+                idNums[str(yourId)][0]["amount"] -= int(amount)
                 idNums[str(recipiantId)][0]["amount"] += int(amount)
-                with open ('TestDataHolding.json', 'w') as json_file:
-                    json.dump(idNums, json_file)
+                write_json_file('TestDataHolding.json', idNums)
                 await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
                      
     else:
         recipiantId = nameinput.id
-        j = open('TestDataHolding.json')
-        idNums = json.load(j)
+        idNums = read_json_file('TestDataHolding.json')
+        idNums[str(yourId)][0]["amount"] -= int(amount)
         idNums[str(recipiantId)][0]["amount"] += int(amount)
-        with open ('TestDataHolding.json', 'w') as json_file:
-            json.dump(idNums, json_file)
+        write_json_file('TestDataHolding.json', idNums)
         await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
    
 bot.run(os.getenv("apikey"))
