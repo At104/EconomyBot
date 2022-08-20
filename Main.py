@@ -23,9 +23,15 @@ def write_json_file(filename: str, data: dict) -> None:
         json.dump(data, json_file)
         json_file.close()
 
+def idCheck (idNums: dict, id: int) -> dict:
+    if str(id) not in idNums:
+        idNums[str(id)] = [{"id": id,"amount": 0}]
+    return idNums
+
+###########################################################################
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="the stonk market")) # Displays the "playing as" for the bot
+    await bot.change_presence(activity=discord.Game(name=" with the stonk market")) # Displays the "playing as" for the bot
     print('Bot is on!')
     # Bot ready
 
@@ -71,18 +77,37 @@ async def send(ctx, nameinput: discord.User = None, amount = ""):
             if amount.content.lower() == " " or not nameinput:
                 ctx.respond("Your entered value is blank!")
             else:
-                idNums = read_json_file('TestDataHolding.json')
-                idNums[str(yourId)][0]["amount"] -= int(amount)
-                idNums[str(recipiantId)][0]["amount"] += int(amount)
-                write_json_file('TestDataHolding.json', idNums)
-                await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
+                recipiantId = nameinput.id
+                if recipiantId == yourId:
+                    await ctx.respond("This is not Venezuela... or is it?")
+                else:
+                    idNums = read_json_file('TestDataHolding.json')
+                    idNums = idCheck(idNums,recipiantId)
+                    idNums = idCheck(idNums,yourId)
+                    idNums[str(yourId)][0]["amount"] -= int(amount)
+                    idNums[str(recipiantId)][0]["amount"] += int(amount)
+                    write_json_file('TestDataHolding.json', idNums)
+                    await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
                      
     else:
         recipiantId = nameinput.id
-        idNums = read_json_file('TestDataHolding.json')
-        idNums[str(yourId)][0]["amount"] -= int(amount)
-        idNums[str(recipiantId)][0]["amount"] += int(amount)
-        write_json_file('TestDataHolding.json', idNums)
-        await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
-   
+        if recipiantId == yourId:
+            await ctx.respond("This is not Venezuela... or is it?")
+        else:
+            idNums = read_json_file('TestDataHolding.json')
+            idNums = idCheck(idNums,recipiantId)
+            idNums = idCheck(idNums,yourId)
+            idNums[str(yourId)][0]["amount"] -= int(amount)
+            idNums[str(recipiantId)][0]["amount"] += int(amount)
+            write_json_file('TestDataHolding.json', idNums)
+            await ctx.respond(f"<@{yourId}> sent " + amount + " to " + f"<@{recipiantId}>" + " !")
+
+@bot.slash_command(name = "balance", description = "Check your own balance")
+async def balance(ctx):
+    yourId = ctx.author.id
+    idNums = read_json_file('TestDataHolding.json')
+    balanceAmount = idNums[str(yourId)][0]["amount"]
+    await ctx.respond("Your balance is: $" + str(balanceAmount))
+
+
 bot.run(os.getenv("apikey"))
