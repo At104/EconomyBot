@@ -13,10 +13,10 @@ class Balance(commands.Cog):
     @slash_command(description = "Check your own balance")
     async def balance(self, ctx):
         yourId = ctx.author.id
-        idNums = read_json_file('TestDataHolding.json')
-        balanceAmount = idNums[str(yourId)][0]["amount"]
+        id_nums = read_json_file('TestDataHolding.json')
+        balanceAmount = id_nums[str(yourId)][0]["amount"]
         await ctx.respond("Your balance is: $" + str(balanceAmount))
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Balance(bot))
 

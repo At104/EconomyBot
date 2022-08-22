@@ -8,12 +8,12 @@ class Getuserid(commands.Cog):
     
     @slash_command(description = "Get user IDs from mentions")
     async def getuserid(self, ctx, user: Option(discord.User, "The user you want to get the ID from", default = None)):
-        yourId = ctx.author.id
+        your_id = ctx.author.id
         if not user:
             await ctx.respond("Please enter in a user!")
         else:
-            userId = user.id
-        await ctx.respond(f"<@{yourId}> is stalking <@{userId}> smh...")
+            user_id = user.id
+        await ctx.respond(f"<@{your_id}> is stalking <@{user_id}> smh...")
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Getuserid(bot))

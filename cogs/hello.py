@@ -11,5 +11,5 @@ class Hello(commands.Cog):
         name = nameinput 
         await ctx.respond(f"Hello {name}!")
     
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Hello(bot))

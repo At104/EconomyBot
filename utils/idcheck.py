@@ -1,7 +1,8 @@
-def id_check(idNums: dict, id: int) -> dict:
+def id_check(id_nums: dict, ids: list) -> dict:
 
     """ Check if Discord user id is in the json database """
-    if str(id) not in idNums:
-        idNums[str(id)] = [{"id": id,"amount": 0}]
+    for id in ids:
+        if str(id) not in id_nums:
+            id_nums[str(id)] = [{"id": id,"amount": 0}]
         
-    return idNums
+    return id_nums
