@@ -16,21 +16,34 @@ class Send(commands.Cog):
         your_id = ctx.author.id
         recipiant_id = nameinput.id
 
-        if (amount == "" or not nameinput):
+        # In case either name or amount inputs are empty
+        if (not amount or not nameinput):
             await ctx.respond("One of the command parameters has an invalid value! Please try again.")
+
+        # Else continue on            
         else:
+            # Cannot send money to yourself :(
             if recipiant_id == your_id:
                 await ctx.respond("This is not Venezuela... or is it?")
+
+            # Else continue on
             else:
+                # Reads database from database
                 id_nums = read_json_file('TestDataHolding.json')
+
+                # If ID database is blank, respond with an error message
                 if id_nums == {}:
                     await ctx.respond("Something went wrong with the JSON parsing.")
+                    
                 else:
+                    # Check if IDs exist in the database
                     id_nums = id_check(id_nums, [your_id, recipiant_id])
-                
+
+                    # Currency transfer
                     id_nums[str(your_id)][0]["amount"] -= amount
                     id_nums[str(recipiant_id)][0]["amount"] += amount
 
+                    # Write new data to the database and return confirmation that the money is sent
                     write_json_file('TestDataHolding.json', id_nums)
                     await ctx.respond(f"<@{your_id}> sent " + str(amount) + " to " + f"<@{recipiant_id}>" + " !")
 
