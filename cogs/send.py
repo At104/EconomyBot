@@ -4,8 +4,8 @@ from discord.commands import slash_command, Option
 
 # Adding utils folder to system path for utilites to be accessible by this cog
 sys.path.append(os.path.join(os.getcwd(), 'utils'))
-from jsonutil import *
-from idcheck import *
+from jsonutil import read_json_file, write_json_file
+from idcheck import id_check
 
 class Send(commands.Cog):
     def __init__(self, bot) -> None:
@@ -37,15 +37,21 @@ class Send(commands.Cog):
                     
                 else:
                     # Check if IDs exist in the database
-                    id_nums = id_check(id_nums, [your_id, recipiant_id])
+                    if (id_check(id_nums, [your_id, recipiant_id]) == False):
+                        await ctx.respond("One of the IDs does not exist in the database. Please initialize your account before sending money.")
+                    
+                    else:
+                        # Check if you have enough money to send
+                        if (id_nums[str(your_id)][0]["amount"] < amount):
+                            await ctx.respond("You do not have enough money to send...bozo")
+                        else:
+                            # Currency transfer
+                            id_nums[str(your_id)][0]["amount"] -= amount
+                            id_nums[str(recipiant_id)][0]["amount"] += amount
 
-                    # Currency transfer
-                    id_nums[str(your_id)][0]["amount"] -= amount
-                    id_nums[str(recipiant_id)][0]["amount"] += amount
-
-                    # Write new data to the database and return confirmation that the money is sent
-                    write_json_file('TestDataHolding.json', id_nums)
-                    await ctx.respond(f"<@{your_id}> sent " + str(amount) + " to " + f"<@{recipiant_id}>" + " !")
+                            # Write new data to the database and return confirmation that the money is sent
+                            write_json_file('TestDataHolding.json', id_nums)
+                            await ctx.respond(f"<@{your_id}> sent " + str(amount) + " to " + f"<@{recipiant_id}>" + " !")
 
 def setup(bot) -> None:
     bot.add_cog(Send(bot))

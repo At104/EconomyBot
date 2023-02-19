@@ -14,8 +14,9 @@ class Balance(commands.Cog):
     async def balance(self, ctx):
         yourId = ctx.author.id
         id_nums = read_json_file('TestDataHolding.json')
-        balanceAmount = id_nums[str(yourId)][0]["amount"]
-        await ctx.respond("Your balance is: $" + str(balanceAmount))
+        balance_amount = id_nums[str(yourId)][0]["amount"]
+        workers_amount = id_nums[str(yourId)][0]["workers"]
+        await ctx.respond("Your balance is: $" + str(balance_amount) + " and you have " + str(workers_amount) + " worker(s)")
 
 def setup(bot) -> None:
     bot.add_cog(Balance(bot))
