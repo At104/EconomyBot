@@ -3,9 +3,9 @@ from discord.ext import commands
 from discord.commands import slash_command, Option
 
 # Adding utils folder to system path for utilites to be accessible by this cog
-sys.path.append(os.path.join(os.getcwd(), 'utils'))
-from jsonutil import read_json_file, write_json_file
-from idcheck import id_check
+#sys.path.append(os.path.join(os.getcwd(), 'utils'))
+from utils.jsonutil import read_json_file, write_json_file
+from utils.idcheck import id_check
 
 class Send(commands.Cog):
     def __init__(self, bot) -> None:
@@ -29,7 +29,7 @@ class Send(commands.Cog):
             # Else continue on
             else:
                 # Reads database from database
-                id_nums = read_json_file('TestDataHolding.json')
+                id_nums = read_json_file('DataHolding.json')
 
                 # If ID database is blank, respond with an error message
                 if id_nums == {}:
@@ -50,7 +50,7 @@ class Send(commands.Cog):
                             id_nums[str(recipiant_id)][0]["amount"] += amount
 
                             # Write new data to the database and return confirmation that the money is sent
-                            write_json_file('TestDataHolding.json', id_nums)
+                            write_json_file('DataHolding.json', id_nums)
                             await ctx.respond(f"<@{your_id}> sent " + str(amount) + " to " + f"<@{recipiant_id}>" + " !")
 
 def setup(bot) -> None:

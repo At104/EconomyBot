@@ -1,10 +1,9 @@
 import discord, os
 from discord.ext import commands
-import os
 from dotenv import load_dotenv
 
 # Slash command pain
-testingservers = [783415814342574151]
+testingservers = [os.getenv("serverid")]
 
 class Bot(discord.Bot):
     def __init__(self):
