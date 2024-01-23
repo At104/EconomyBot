@@ -1,4 +1,3 @@
-import discord, sys, os
 from discord.ext import commands, tasks
 from discord.commands import slash_command, Option
 first_instance_loop = True
