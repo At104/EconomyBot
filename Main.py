@@ -32,7 +32,8 @@ def load_cogs() -> None:
 def main() -> None:
     load_dotenv()
     load_cogs()
-    bot.run(os.getenv("apikey"))
+    bot.run(os.getenv("TOKEN"))
+
 
 if __name__ == "__main__":
     main()
