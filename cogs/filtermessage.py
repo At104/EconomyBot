@@ -19,10 +19,11 @@ class FilterMessage(commands.Cog):
         
         # Fetch the role using the correct role ID
         role_id = int(os.getenv("new_member_role_id_test"))  
+        certain_id = int(os.getenv("certain_someone_id"))
         role = guild.get_role(role_id)
         
         msg_content = message.content.lower()
-        if message.author.id == int(os.getenv("certain_someone_id")) and msg_content == "poker":
+        if message.author.id == certain_id and "poker" in msg_content:
             await message.delete()
             await message.channel.send("no poker for you")
        

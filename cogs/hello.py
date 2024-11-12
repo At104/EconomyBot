@@ -6,7 +6,7 @@ class Hello(commands.Cog):
         self.bot = bot
     
     @slash_command(description = "Say hello to a person!")
-    async def hello(self, ctx, nameinput: Option(str, "Enter the person's name!", required = True)):
+    async def hello(self, ctx, nameinput: Option(str, "Enter the person's name!", required = True)): # type: ignore
         name = nameinput 
         await ctx.respond(f"Hello {name}!")
     

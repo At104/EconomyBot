@@ -16,8 +16,11 @@ class TimeJoinRole(commands.Cog):
         await self.bot.wait_until_ready()
         guild = self.bot.get_guild(int(self.bot.debug_guilds[0]))
         #members = guild.members
-        role = guild.get_role(int(os.getenv("new_member_role_id_test")))
-        new_role = guild.get_role(int(os.getenv("member_role_id_test")))
+        #role = guild.get_role(int(os.getenv("new_member_role_id_test")))
+        #new_role = guild.get_role(int(os.getenv("member_role_id_test")))
+        
+        role = guild.get_role(os.getenv("fsm_newmember_id"))
+        new_role = guild.get_role(os.getenv("fsm_member_id"))
         
         members_with_role = [member for member in guild.members if role in member.roles]
         

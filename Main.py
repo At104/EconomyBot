@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 # Slash command pain
 load_dotenv()
-testingservers = [os.getenv("serveridtest"),os.getenv("serveridbotify")]
+testingservers = [os.getenv("serveridfsm"),os.getenv("serveridtest"),os.getenv("serveridbotify")]
 
 class Bot(discord.Bot):
     def __init__(self):
