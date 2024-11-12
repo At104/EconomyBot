@@ -11,7 +11,7 @@ class Workers(commands.Cog):
         self.bot = bot
     
     @slash_command(description = "Purchase workers to increase your income")
-    async def buyworkers(self, ctx, amount: Option(int, "How many workers you want to buy", required=True)):
+    async def buyworkers(self, ctx, amount: Option(int, "How many workers you want to buy", required=True)): # type: ignore
         global workers_cost
         id = ctx.author.id
         workers_amount = amount

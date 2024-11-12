@@ -7,7 +7,7 @@ class Getuserid(commands.Cog):
         self.bot = bot
     
     @slash_command(description = "Get user IDs from mentions")
-    async def getuserid(self, ctx, user: Option(discord.User, "The user you want to get the ID from", default = None)):
+    async def getuserid(self, ctx, user: Option(discord.User, "The user you want to get the ID from", default = None)): # type: ignore
         your_id = ctx.author.id
         if not user:
             await ctx.respond("Please enter in a user!")

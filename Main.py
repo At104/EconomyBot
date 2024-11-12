@@ -1,14 +1,15 @@
 import discord, os
-from discord.ext import commands
 from dotenv import load_dotenv
 
 # Slash command pain
-testingservers = [os.getenv("serverid")]
+load_dotenv()
+testingservers = [os.getenv("serveridtest"),os.getenv("serveridbotify")]
 
 class Bot(discord.Bot):
     def __init__(self):
-        intents = discord.Intents.default()
-        intents.message_content = True
+        #intents = discord.Intents.default()
+        #intents.message_content = True
+        intents = discord.Intents.all()
         super().__init__(
             intents = intents,
             debug_guilds = testingservers
@@ -30,7 +31,6 @@ def load_cogs() -> None:
             bot.load_extension(f'cogs.{file[:-3]}')
 
 def main() -> None:
-    load_dotenv()
     load_cogs()
     bot.run(os.getenv("TOKEN"))
 

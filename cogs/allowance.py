@@ -15,7 +15,7 @@ class Allowance(commands.Cog):
     @tasks.loop(minutes=10)
     async def allowance(self):
         global first_instance_loop
-        # This is to prevent the loop from running before the bot is ready
+        # This is to prevent the loop from running before the bot is ready, or when the bot is redeploying
         if not first_instance_loop:
           id_nums = read_json_file('DataHolding.json')
           print("Interest added")
