@@ -41,22 +41,16 @@ EconomyBot is a versatile Discord bot designed to manage an economy system and t
 
 ## Usage
 
+Can be used in any discord server if you want to add some fun or moderate a growing crowd. New updates on the way!
+
 1. **Run the bot**:
     ```bash
     python main.py
     ```
-
-2. **Invite the bot to your server**:
-    ~~~~TO BE ADDED~~~.
-
-
-
-
-
 ## Contact
 
 For any questions or suggestions, feel free to open an issue or contact the project maintainer:
 
 - **GitHub**: [At104](https://github.com/At104)
-Created by At104 & Raminh05
-Developed & Maintained by At104
+- Created by At104 & Raminh05
+- Developed & Maintained by At104
