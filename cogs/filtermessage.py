@@ -29,7 +29,7 @@ class FilterMessage(commands.Cog):
        
         if role in message.author.roles:     
             print("Checking words")  
-            words = self.scan_for_words(msg_content, ["sell", "offer", "tickets"])
+            words = self.scan_for_words(msg_content, ["sell", "offer", "ticket", "coldplay", "bus", "pass", "concert", "concerts", "selling", "buy", "prep101", "hsr", "tutor", "taylor swift"])
             if words:
                 await message.delete()  
                 await message.author.send("Your message contained prohibited words and has been deleted.")

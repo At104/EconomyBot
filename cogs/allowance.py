@@ -18,7 +18,7 @@ class Allowance(commands.Cog):
         # This is to prevent the loop from running before the bot is ready, or when the bot is redeploying
         if not first_instance_loop:
           id_nums = read_json_file('DataHolding.json')
-          print("Interest added")
+          print("Money added")
           #Adds 20 dollars per worker to each user
           for id in id_nums:
               worker_amount = id_nums[id][0]["workers"]

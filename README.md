@@ -1,7 +1,7 @@
 # EconomyBot
 
 ![EconomyBot](https://img.shields.io/badge/Discord-Bot-blue.svg)
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
 
 ## Overview
 
@@ -36,7 +36,7 @@ EconomyBot is a versatile Discord bot designed to manage an economy system and t
 4. **Set up environment variables**:
     Create a `.env` file in the root directory and add your Discord bot token and other necessary environment variables:
     ```env
-    DISCORD_TOKEN=your_discord_token
+    TOKEN=your_discord_token
     ```
 
 ## Usage

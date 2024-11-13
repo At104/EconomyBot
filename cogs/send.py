@@ -12,7 +12,7 @@ class Send(commands.Cog):
         self.bot = bot
     
     @slash_command(description = "Send another person money")
-    async def send(self, ctx, nameinput: Option(discord.User, "The name of the recipiant", required = True), amount: Option(int, "The amount of currency you want to send", required = True)):
+    async def send(self, ctx, nameinput: Option(discord.User, "The name of the recipiant", required = True), amount: Option(int, "The amount of currency you want to send", required = True)): # type: ignore
         your_id = ctx.author.id
         recipiant_id = nameinput.id
 
@@ -25,6 +25,9 @@ class Send(commands.Cog):
             # Cannot send money to yourself :(
             if recipiant_id == your_id:
                 await ctx.respond("This is not Venezuela... or is it?")
+            
+            elif amount <= 0:
+                await ctx.respond("You cannot send a negative amount of money... bozo")
 
             # Else continue on
             else:

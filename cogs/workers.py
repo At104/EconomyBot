@@ -5,16 +5,20 @@ from discord.commands import slash_command, Option
 #sys.path.append(os.path.join(os.getcwd(), 'utils'))
 from utils.jsonutil import read_json_file, write_json_file
 from utils.idcheck import id_check
+
 workers_cost = 100
+
 class Workers(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
     
     @slash_command(description = "Purchase workers to increase your income")
-    async def buyworkers(self, ctx, amount: Option(int, "How many workers you want to buy", required=True)): # type: ignore
+    async def buyworkers(self, ctx, amount: Option(int, "How many workers you want to buy, 100 per worker", required=True)): # type: ignore
         global workers_cost
         id = ctx.author.id
         workers_amount = amount
+        if amount <= 0:
+            await ctx.respond("You cannot buy negative workers... bozo")
         id_nums = read_json_file('DataHolding.json')
         if (id_check(id_nums, [id])): 
             # Checks if the user has enough money to buy the workers
