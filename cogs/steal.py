@@ -28,7 +28,7 @@ class Steal(commands.Cog):
             await ctx.respond(f"{target.display_name} has no money to steal.")
             return
         
-        amount = random.randint(1, int(balance_target*0.75))  # Random amount between 1 and 100
+        amount = random.randint(1, int(balance_target*0.70))  # Random amount between 1 and 100
         id_nums[str(target_id)][0]["amount"] -= amount
         id_nums[str(author_id)][0]["amount"] += amount
 

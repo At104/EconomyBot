@@ -12,7 +12,7 @@ class Allowance(commands.Cog):
         self.allowance.start()
         
 
-    @tasks.loop(minutes=10)
+    @tasks.loop(minutes=20)
     async def allowance(self):
         global first_instance_loop
         # This is to prevent the loop from running before the bot is ready, or when the bot is redeploying
@@ -21,13 +21,14 @@ class Allowance(commands.Cog):
           print("Money added")
           #Adds 20 dollars per worker to each user
           for id in id_nums:
-              worker_amount = id_nums[id][0]["workers"]
-              id_nums[id][0]["amount"] += (20*worker_amount)
+              #Updates the income of each user based on the number of workers they have
+              id_nums[id][0]["income"] =  60 * id_nums[id][0]["workers"]
+              id_nums[id][0]["amount"] += (int(id_nums[id][0]["income"]/3))
               write_json_file('DataHolding.json', id_nums)
         else:
               first_instance_loop = False
 
-    
+    # 1 worker costs 500 dollars, and increases income by 20 dollars per 20 minutes or 60 dollars per hour
 
 def setup(bot) -> None:
     bot.add_cog(Allowance(bot))

@@ -22,8 +22,8 @@ class FilterMessage(commands.Cog):
         certain_id = int(os.getenv("certain_someone_id"))
         role = guild.get_role(role_id)
         
-        msg_content = message.content.lower()
-        if message.author.id == certain_id and "poker" in msg_content:
+        msg_content = message.content.lower().replace(" ", "")
+        if message.author.id == certain_id and self.scan_for_words(msg_content, ["poker","p0ker","p0k3r","pok3r"]):
             await message.delete()
             await message.channel.send("no poker for you")
        

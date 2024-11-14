@@ -24,12 +24,13 @@ class Espionage(commands.Cog):
         id_nums = read_json_file('DataHolding.json')
         workers_target = id_nums[str(target_id)][0]["workers"]
         
-        if workers_target <= 0:
+        if workers_target <= 1:
             await ctx.respond(f"{target.display_name} has no workers to remove.")
             return
         
-        workers_removed = random.randint(1, int(workers_target*0.80))  # Random amount of workers to remove
+        workers_removed = random.randint(1, int(workers_target*0.65))  # Random amount of workers to remove
         id_nums[str(target_id)][0]["workers"] -= workers_removed
+        id_nums[str(target_id)][0]["income"] = id_nums[str(target_id)][0]["workers"]*60
 
         # Write new data to the database and return confirmation that the workers were removed
         write_json_file('DataHolding.json', id_nums)

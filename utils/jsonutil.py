@@ -20,7 +20,7 @@ def write_json_file(filename: str, data: dict) -> None:
     """ Dumps json-formatted data dictionary to a json file """
     try:
         with open(filename, 'w') as json_file:
-            json.dump(data, json_file)
+            json.dump(data, json_file, indent=4)
             json_file.close()
     except:
         print("ERROR: Could not write data to the JSON file. Check if the file exists or if the filename is correct.")
