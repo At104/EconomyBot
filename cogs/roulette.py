@@ -9,9 +9,11 @@ from utils.jsonutil import read_json_file, write_json_file
 
 load_dotenv()
 roulette_weight = list(map(int, os.getenv("roulette_weight").split(',')))
+
 class Roulette(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.first_attempt = True
 
     @slash_command(description="Play a game of roulette!")
     @commands.cooldown(1, 300, commands.BucketType.user)  # 1 use per 300 seconds (5 minutes) per user
@@ -21,18 +23,23 @@ class Roulette(commands.Cog):
 
         if user_id not in id_nums or id_nums[user_id][0]["amount"] < bet_amount:
             await ctx.respond("You don't have enough money to place this bet.")
+            if self.first_attempt:
+                self.roulette.reset_cooldown(ctx)
             return
 
         embed = discord.Embed(title="Roulette Game", description="Choose your bet!", color=discord.Color.green())
         view = RouletteView(ctx, bet_amount)
         await ctx.respond(embed=embed, view=view)
+        self.first_attempt = False
 
     @roulette.error
     async def roulette_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             await ctx.respond(f"Don't be a serial gambler! Try again in {int(error.retry_after)} seconds.")
+            self.first_attempt = True
         else:
             await ctx.respond("An error occurred while trying to play roulette.")
+            self.first_attempt = True
 
 class RouletteView(View):
     def __init__(self, ctx, bet_amount):
@@ -42,14 +49,20 @@ class RouletteView(View):
 
     @discord.ui.button(label="Red", style=discord.ButtonStyle.danger)
     async def red_button(self, button: Button, interaction: discord.Interaction):
+        if interaction.user.id != self.ctx.author.id:
+            return  # Ignore interaction from other users
         await self.spin_wheel(interaction, "Red")
 
     @discord.ui.button(label="Black", style=discord.ButtonStyle.primary)
     async def black_button(self, button: Button, interaction: discord.Interaction):
+        if interaction.user.id != self.ctx.author.id:
+            return  # Ignore interaction from other users
         await self.spin_wheel(interaction, "Black")
 
     @discord.ui.button(label="Green", style=discord.ButtonStyle.success)
     async def green_button(self, button: Button, interaction: discord.Interaction):
+        if interaction.user.id != self.ctx.author.id:
+            return  # Ignore interaction from other users
         await self.spin_wheel(interaction, "Green")
 
     async def spin_wheel(self, interaction: discord.Interaction, bet: str):

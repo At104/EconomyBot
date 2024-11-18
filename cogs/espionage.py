@@ -9,6 +9,7 @@ from utils.jsonutil import read_json_file, write_json_file
 class Espionage(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
+        self.first_attempt = True
 
     @slash_command(description="Remove workers from another person!")
     @cooldown(1, 7200, BucketType.user)  # 2 hour cooldown per user
@@ -19,6 +20,8 @@ class Espionage(commands.Cog):
         
         if author_id == target_id:
             await ctx.respond("Do you enjoy removing your own workers? Seek help.")
+            if self.first_attempt:
+                self.espionage.reset_cooldown(ctx)
             return
         
         id_nums = read_json_file('DataHolding.json')
@@ -26,6 +29,8 @@ class Espionage(commands.Cog):
         
         if workers_target <= 1:
             await ctx.respond(f"{target.display_name} has no workers to remove.")
+            if self.first_attempt:
+                self.espionage.reset_cooldown(ctx)
             return
         
         workers_removed = random.randint(1, int(workers_target*0.65))  # Random amount of workers to remove
@@ -36,13 +41,16 @@ class Espionage(commands.Cog):
         write_json_file('DataHolding.json', id_nums)
         
         await ctx.respond(f"<@{author_id}> removed " + str(workers_removed) + " workers from " + f"<@{target_id}>" + " !")
+        self.first_attempt = False
 
     @espionage.error
     async def espionage_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             await ctx.respond(f"This command is on cooldown. Try again in {int(error.retry_after)} seconds.")
+            self.first_attempt = True
         else:
             await ctx.respond("An error occurred while trying to remove workers.")
+            self.first_attempt = True
 
 def setup(bot) -> None:
     bot.add_cog(Espionage(bot))
