@@ -19,17 +19,19 @@ class BuyWorkers(commands.Cog):
         workers_amount = amount
         if amount <= 0:
             await ctx.respond("You cannot buy negative workers... bozo")
+            return
         id_nums = read_json_file('DataHolding.json')
         if (id_check(id_nums, [id])): 
             # Checks if the user has enough money to buy the workers
-            if (id_nums[str(id)][0]["amount"] >= (workers_cost*workers_amount)):
-                id_nums[str(id)][0]["amount"] -= (workers_cost*workers_amount)
+            cost = workers_cost*workers_amount
+            if (id_nums[str(id)][0]["amount"] >= (cost)):
                 
+                id_nums[str(id)][0]["amount"] -= (cost)
                 id_nums[str(id)][0]["workers"] += workers_amount
                 id_nums[str(id)][0]["income"] = id_nums[str(id)][0]["workers"]*60
                 
                 write_json_file('DataHolding.json', id_nums)
-                await ctx.respond(f"<@{id}> has bought {workers_amount} worker(s) for {workers_cost*workers_amount} dollars!")
+                await ctx.respond(f"<@{id}> has bought {workers_amount} worker(s) for {cost} dollars!")
             else:
                 await ctx.respond(f"<@{id}> does not have enough money to buy {workers_amount} worker(s)!")
 

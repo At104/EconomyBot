@@ -33,7 +33,7 @@ class Steal(commands.Cog):
                 self.steal.reset_cooldown(ctx)
             return
 
-        amount = random.randint(1, int(balance_target * 0.70))  # Random amount between 1 and 70% of target's balance
+        amount = random.randint(1, int(balance_target * 0.75))  # Random amount between 1 and 75% of target's balance
         id_nums[str(target_id)][0]["amount"] -= amount
         id_nums[str(author_id)][0]["amount"] += amount
 

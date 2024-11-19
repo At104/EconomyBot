@@ -26,6 +26,12 @@ class Roulette(commands.Cog):
             if self.first_attempt:
                 self.roulette.reset_cooldown(ctx)
             return
+        
+        if bet_amount <= 0:
+            await ctx.respond("You can't bet zero or negative amounts.")
+            if self.first_attempt:
+                self.roulette.reset_cooldown(ctx)
+            return
 
         embed = discord.Embed(title="Roulette Game", description="Choose your bet!", color=discord.Color.green())
         view = RouletteView(ctx, bet_amount)
