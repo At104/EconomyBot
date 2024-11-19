@@ -11,7 +11,7 @@ class Store(commands.Cog):
     @slash_command(description="Open the store to buy items!")
     async def store(self, ctx):
         embed = discord.Embed(title="Store", description="Buy items by pressing the buttons below!", color=discord.Color.red())
-        embed.add_field(name="Rich Boi Role", value="Price: $100,000", inline=False)
+        embed.add_field(name="Rich Boi", value="Price: $100,000", inline=False)
         embed.add_field(name="Gold", value="Price: $10,000", inline=False)
         embed.add_field(name="Workers", value="Price: $500", inline=False)
 
@@ -23,7 +23,7 @@ class StoreView(View):
         super().__init__(timeout=60)  # View will timeout after 60 seconds
         self.ctx = ctx
 
-    @discord.ui.button(label="Buy Rich Boi Role", style=discord.ButtonStyle.success)
+    @discord.ui.button(label="Buy Rich Boi", style=discord.ButtonStyle.success)
     async def buy_rich_boi_role(self, button: Button, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
             return  # Ignore interaction from other users

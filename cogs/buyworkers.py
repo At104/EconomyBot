@@ -1,8 +1,8 @@
 from discord.ext import commands
 from discord.commands import slash_command, Option
 
-# Adding utils folder to system path for utilites to be accessible by this cog
-#sys.path.append(os.path.join(os.getcwd(), 'utils'))
+# Legacy code kept for reference, functionality has been integrated into store
+# Cog has been unloaded in main.py
 from utils.jsonutil import read_json_file, write_json_file
 from utils.idcheck import id_check
 
