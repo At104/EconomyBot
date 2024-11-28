@@ -19,6 +19,7 @@ class Send(commands.Cog):
         # In case either name or amount inputs are empty
         if (not amount or not nameinput):
             await ctx.respond("One of the command parameters has an invalid value! Please try again.")
+            return
 
         # Else continue on            
         else:

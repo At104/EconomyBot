@@ -35,7 +35,7 @@ class Sabotage(commands.Cog):
         
         workers_removed = random.randint(1, int(workers_target*0.60))  # Random amount of workers to remove
         id_nums[str(target_id)][0]["workers"] -= workers_removed
-        id_nums[str(target_id)][0]["income"] = id_nums[str(target_id)][0]["workers"]*60
+        id_nums[str(target_id)][0]["income"] = id_nums[str(target_id)][0]["workers"]*45
 
         # Write new data to the database and return confirmation that the workers were removed
         write_json_file('DataHolding.json', id_nums)

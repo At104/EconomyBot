@@ -22,7 +22,7 @@ class Allowance(commands.Cog):
           #Adds 20 dollars per worker to each user
           for id in id_nums:
               #Updates the income of each user based on the number of workers they have
-              id_nums[id][0]["income"] =  60 * id_nums[id][0]["workers"]
+              id_nums[id][0]["income"] =  45 * id_nums[id][0]["workers"]
               id_nums[id][0]["amount"] += (int(id_nums[id][0]["income"]/3))
               write_json_file('DataHolding.json', id_nums)
         else:

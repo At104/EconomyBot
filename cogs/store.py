@@ -11,9 +11,9 @@ class Store(commands.Cog):
     @slash_command(description="Open the store to buy items!")
     async def store(self, ctx):
         embed = discord.Embed(title="Store", description="Buy items by pressing the buttons below!", color=discord.Color.red())
-        embed.add_field(name="Rich Boi", value="Price: $100,000", inline=False)
+        embed.add_field(name="Rich Boi", value="Price: $200,000", inline=False)
         embed.add_field(name="Gold", value="Price: $10,000", inline=False)
-        embed.add_field(name="Workers", value="Price: $500", inline=False)
+        embed.add_field(name="Workers", value="Price: $750", inline=False)
 
         view = StoreView(ctx)
         await ctx.respond(embed=embed, view=view)
@@ -27,7 +27,7 @@ class StoreView(View):
     async def buy_rich_boi_role(self, button: Button, interaction: discord.Interaction):
         if interaction.user.id != self.ctx.author.id:
             return  # Ignore interaction from other users
-        await self.buy_item(interaction, "Rich Boi", 100000)
+        await self.buy_item(interaction, "Rich Boi", 200000)
 
     @discord.ui.button(label="Buy Gold", style=discord.ButtonStyle.primary)
     async def buy_gold(self, button: Button, interaction: discord.Interaction):
@@ -68,7 +68,7 @@ class StoreView(View):
 
         elif item_name == "Workers":
             id_nums[user_id][0]["workers"] += quantity
-            id_nums[user_id][0]["income"] = id_nums[user_id][0]["workers"] * 60
+            id_nums[user_id][0]["income"] = id_nums[user_id][0]["workers"] * 45
             await interaction.response.send_message(f"You bought {quantity} worker(s) for ${total_price}!", ephemeral=True)
 
         id_nums[user_id][0]["amount"] -= total_price
@@ -97,7 +97,7 @@ class BuyWorkersModal(Modal):
 
     async def callback(self, interaction: discord.Interaction):
         quantity = int(self.children[0].value)
-        await StoreView(self.ctx).buy_item(interaction, "Workers", 500, quantity)
+        await StoreView(self.ctx).buy_item(interaction, "Workers", 750, quantity)
 
 def setup(bot):
     bot.add_cog(Store(bot))

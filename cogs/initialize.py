@@ -19,7 +19,7 @@ class Initialize(commands.Cog):
             await ctx.respond("You have already initialized your account!")
         # If ID does not exist in the database, add it to the database
         else:
-            id_nums[str(id)] = [{"id": id,"amount": 500, "workers": 0, "income": 0, "gold": 0}]
+            id_nums[str(id)] = [{"id": id,"amount": 500, "workers": 1, "income": 0, "gold": 0}]
             write_json_file('DataHolding.json', id_nums)
             await ctx.respond(f"<@{id}> has initialized their account!")
        
