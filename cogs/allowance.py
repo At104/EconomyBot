@@ -19,7 +19,7 @@ class Allowance(commands.Cog):
         if not first_instance_loop:
           id_nums = read_json_file('DataHolding.json')
           print("Money added")
-          #Adds 20 dollars per worker to each user
+          #Adds 15 dollars per worker to each user (15 * 3 = 45 wo)
           for id in id_nums:
               #Updates the income of each user based on the number of workers they have
               id_nums[id][0]["income"] =  45 * id_nums[id][0]["workers"]
@@ -28,7 +28,6 @@ class Allowance(commands.Cog):
         else:
               first_instance_loop = False
 
-    # 1 worker costs 500 dollars, and increases income by 20 dollars per 20 minutes or 60 dollars per hour
-
+  
 def setup(bot) -> None:
     bot.add_cog(Allowance(bot))

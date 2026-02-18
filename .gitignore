@@ -3,3 +3,4 @@
 /env
 .env
 DataHolding.json
+filter_config.py

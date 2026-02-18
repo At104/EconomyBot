@@ -17,7 +17,7 @@ class DynamoDBManager:
         aws_region = os.getenv('AWS_DEFAULT_REGION')
         aws_endpoint = os.getenv('AWS_ENDPOINT_URL')  # For LocalStack
         
-        self.table_name = os.getenv('DYNAMODB_TABLE_NAME', 'EconomyBot-Users')
+        self.table_name = os.getenv('DYNAMODB_TABLE_NAME')
         
         # Initialize DynamoDB resource
         if aws_endpoint:
